@@ -1,0 +1,6 @@
+<script src="js/phonetic-numbers.js"></script>
+
+<h1>Phonetic Numbers</h1>
+
+<p>Converting numbers to phonograms - aka - <b>NumFu</b>!</p>
+<p>Making it easier to remember numbers over time...</p>
