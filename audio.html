@@ -20,6 +20,7 @@ analyser.connect(context.destination);
 analyser.fftSize = 2048;
 var bufferLength = analyser.frequencyBinCount; // half the FFT value
 var dataArray = new Uint8Array(bufferLength); // create an array to store the data
+
 var drawVisual; // requestAnimationFrame
 var canvas = document.createElement('Canvas');
 canvas.id = 'track1';
@@ -44,7 +45,7 @@ function draw() {
   
   for (var i = 0; i < bufferLength; i++) {
     var v = dataArray[i] / 128.0;
-    var y = v * HEIGTH / 2;
+    var y = v * HEIGHT / 2;
     
     if (i === 0) {
       canvasCtx.moveTo(x, y);
