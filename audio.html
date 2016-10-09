@@ -17,14 +17,16 @@ var analyser = context.createAnalyser();
 var source = context.createMediaElementSource(audio);
 source.connect(analyser);
 analyser.connect(context.destination);
-
-WIDTH = canvas.width;
-HEIGHT = canvas.height;
-
 analyser.fftSize = 2048;
 var bufferLength = analyser.frequencyBinCount; // half the FFT value
 var dataArray = new Uint8Array(bufferLength); // create an array to store the data
 var drawVisual; // requestAnimationFrame
+var canvas = document.createElement('Canvas');
+canvas.id = 'track1';
+document.body.appendChild(canvas);
+WIDTH = canvas.width;
+HEIGHT = canvas.height;
+var canvasCtx = canvas.getContext('2d');
 canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
 
 function draw() {
