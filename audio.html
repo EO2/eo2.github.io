@@ -4,8 +4,8 @@
 <p>Audio Analyzer (HTML Audio + Web Audio API) - Stream or file reader</p>
 
 <!-- <audio></audio> -->
+
 <script>
-// Create an <audio> element dynamically.
 var audio = new Audio();
 audio.src = 'http://selected.deepmix.ru/Dima_Algoritm.mp3' // 'recording1.mp4 (multitrack)
 audio.controls = true;
@@ -14,20 +14,21 @@ document.body.appendChild(audio);
 
 var context = new AudioContext();
 var analyser = context.createAnalyser();
+var source = context.createMediaElementSource(audio);
+source.connect(analyser);
+analyser.connect(context.destination);
 
-// Wait for window.onload to fire. See crbug.com/112368
-window.addEventListener('load', function(e) {
-  // Our <audio> element will be the audio source.
-  var source = context.createMediaElementSource(audio);
-  source.connect(analyser);
-  analyser.connect(context.destination);
+WIDTH = canvas.width;
+HEIGHT = canvas.height;
 
-  // ...call requestAnimationFrame() and render the analyser's output to canvas.
-  requestAnimationFrame(draw);
-}, false);
+analyser.fftSize = 2048;
+var bufferLength = analyser.frequencyBinCount; // half the FFT value
+var dataArray = new Uint8Array(bufferLength); // create an array to store the data
+var drawVisual; // requestAnimationFrame
+canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
 
 function draw() {
-  //drawVisual = requestAnimationFrame(draw);
+  drawVisual = requestAnimationFrame(draw);
   analyser.getByteTimeDomainData(dataArray);
   
   canvasCtx.fillStyle = 'rgb(200, 200, 200)';
@@ -51,8 +52,10 @@ function draw() {
     
     x += sliceWidth;
     
-    canvasCtx.lineTo(canvas.width, canvas.height / 2);
+    canvasCtx.lineTo(WIDTH, HEIGHT / 2);
     canvasCtx.stroke();
   }
 }
+
+draw();
 </script>
