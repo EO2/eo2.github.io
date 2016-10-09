@@ -12,7 +12,7 @@ audio.controls = true;
 audio.autoplay = true;
 document.body.appendChild(audio);
 
-var context = new webkitAudioContext();
+var context = new AudioContext();
 var analyser = context.createAnalyser();
 
 // Wait for window.onload to fire. See crbug.com/112368
